@@ -627,40 +627,8 @@ analyze_size.sh after-clean after-install
 - **总结：似乎镜像无法优化了，已到绝处，无法逢生，在绝对的力量面前任何优化手段都毫无意义😮‍💨**
 ```plaintext
 root@1fa2e7cbae3c:~/Samba# analyze_size.sh after-install before-install
-[信息] 快照 after-clean 已存在，跳过采集。如需更新请使用 --force 参数。
-=== [after-clean] 镜像体积快照 2025-05-18 04:20:36 ===
-
-/root/.profile	106b
-/usr/local/bin	8KB
-/usr/local/lib	0b
-/usr/local/share	0b
-/var/cache/apk	2MB
-/var/cache/fontconfig	78KB
-/var/cache/misc	0b
-/var/cache/samba	0b
-/var/lib/misc	0b
-/var/lib/samba	0b
-/var/lib/sudo	0b
-
-🔍 [对比] after-install ➜ after-clean 体积变化:
-
-/root/.profile      	106b ->(0b)
-/usr/local/bin      	8KB ->(-6KB)
-/usr/local/lib      	0b ->(0b)
-/usr/local/share    	0b ->(0b)
-/var/cache/apk      	2MB ->(0b)
-/var/cache/fontconfig	78KB ->(0b)
-/var/cache/misc     	0b ->(0b)
-/var/cache/samba    	0b ->(0b)
-/var/lib/misc       	0b ->(0b)
-/var/lib/samba      	0b ->(0b)
-/var/lib/sudo       	0b ->(0b)
-```
-
-```plaintext
-root@1fa2e7cbae3c:~/Samba# analyze_size.sh after-clean after-install
 [信息] 快照 after-install 已存在，跳过采集。如需更新请使用 --force 参数。
-=== [after-install] 镜像体积快照 2025-05-18 04:20:42 ===
+=== [after-install] 镜像体积快照 2025-05-18 04:31:24 ===
 
 /root/.profile	106b
 /usr/local/bin	14KB
@@ -685,6 +653,38 @@ root@1fa2e7cbae3c:~/Samba# analyze_size.sh after-clean after-install
 /var/cache/misc     	0b ->(-4KB)
 /var/cache/samba    	0b ->(0b)
 /var/lib/misc       	0b ->(-4KB)
+/var/lib/samba      	0b ->(0b)
+/var/lib/sudo       	0b ->(0b)
+```
+
+```plaintext
+root@1fa2e7cbae3c:~/Samba# analyze_size.sh after-clean after-install
+[信息] 快照 after-clean 已存在，跳过采集。如需更新请使用 --force 参数。
+=== [after-clean] 镜像体积快照 2025-05-18 04:31:44 ===
+
+/root/.profile	106b
+/usr/local/bin	8KB
+/usr/local/lib	0b
+/usr/local/share	0b
+/var/cache/apk	2MB
+/var/cache/fontconfig	78KB
+/var/cache/misc	0b
+/var/cache/samba	0b
+/var/lib/misc	0b
+/var/lib/samba	0b
+/var/lib/sudo	0b
+
+🔍 [对比] after-install ➜ after-clean 体积变化:
+
+/root/.profile      	106b ->(0b)
+/usr/local/bin      	8KB ->(-6KB)
+/usr/local/lib      	0b ->(0b)
+/usr/local/share    	0b ->(0b)
+/var/cache/apk      	2MB ->(0b)
+/var/cache/fontconfig	78KB ->(0b)
+/var/cache/misc     	0b ->(0b)
+/var/cache/samba    	0b ->(0b)
+/var/lib/misc       	0b ->(0b)
 /var/lib/samba      	0b ->(0b)
 /var/lib/sudo       	0b ->(0b)
 ```
