@@ -627,102 +627,66 @@ analyze_size.sh after-clean after-install
 - **总结：似乎镜像无法优化了，已到绝处，无法逢生，在绝对的力量面前任何优化手段都毫无意义😮‍💨**
 ```plaintext
 root@1fa2e7cbae3c:~/Samba# analyze_size.sh after-install before-install
-[信息] 快照 after-install 已存在，跳过采集。如需更新请使用 --force 参数。
-=== [after-install] 镜像体积快照 2025-05-01 21:43:32 ===
+[信息] 快照 after-clean 已存在，跳过采集。如需更新请使用 --force 参数。
+=== [after-clean] 镜像体积快照 2025-05-18 04:20:36 ===
 
-/root/.bashrc	3KB
-/root/.profile	210b
-/root/Resilio	0b
-/usr/local/bin	23MB
-/usr/local/etc	379b
-/usr/local/games	0b
-/usr/local/include	0b
+/root/.profile	106b
+/usr/local/bin	8KB
 /usr/local/lib	0b
-/usr/local/libexec	0b
-/usr/local/man	9b
-/usr/local/sbin	0b
 /usr/local/share	0b
-/usr/local/src	3KB
-/var/cache/apt	0b
-/var/cache/debconf	2MB
-/var/cache/ldconfig	7KB
-/var/lib/apt/extended_states	2KB
-/var/lib/apt/lists	35MB
-/var/lib/apt/mirrors	0b
-/var/lib/apt/periodic	0b
+/var/cache/apk	2MB
+/var/cache/fontconfig	78KB
+/var/cache/misc	0b
+/var/cache/samba	0b
+/var/lib/misc	0b
+/var/lib/samba	0b
+/var/lib/sudo	0b
 
-🔍 [对比] before-install ➜ after-install 体积变化:
+🔍 [对比] after-install ➜ after-clean 体积变化:
 
-/root/.bashrc       	3KB ->(+78b)
-/root/.profile      	210b ->(+78b)
-/root/Resilio       	0b ->(0b)
-/usr/local/bin      	23MB ->(+23MB)
-/usr/local/etc      	379b ->(+379b)
-/usr/local/games    	0b ->(0b)
-/usr/local/include  	0b ->(0b)
+/root/.profile      	106b ->(0b)
+/usr/local/bin      	8KB ->(-6KB)
 /usr/local/lib      	0b ->(0b)
-/usr/local/libexec  	0b ->(0b)
-/usr/local/man      	9b ->(0b)
-/usr/local/sbin     	0b ->(0b)
 /usr/local/share    	0b ->(0b)
-/usr/local/src      	3KB ->(-379b)
-/var/cache/apt      	0b ->(0b)
-/var/cache/debconf  	2MB ->(+1MB)
-/var/cache/ldconfig 	7KB ->(+2KB)
-/var/lib/apt/extended_states	2KB ->(+2KB)
-/var/lib/apt/lists  	35MB ->(+35MB)
-/var/lib/apt/mirrors	0b ->(0b)
-/var/lib/apt/periodic	0b ->(0b)
+/var/cache/apk      	2MB ->(0b)
+/var/cache/fontconfig	78KB ->(0b)
+/var/cache/misc     	0b ->(0b)
+/var/cache/samba    	0b ->(0b)
+/var/lib/misc       	0b ->(0b)
+/var/lib/samba      	0b ->(0b)
+/var/lib/sudo       	0b ->(0b)
 ```
 
 ```plaintext
 root@1fa2e7cbae3c:~/Samba# analyze_size.sh after-clean after-install
-[信息] 快照 after-clean 已存在，跳过采集。如需更新请使用 --force 参数。
-=== [after-clean] 镜像体积快照 2025-05-01 21:43:42 ===
+[信息] 快照 after-install 已存在，跳过采集。如需更新请使用 --force 参数。
+=== [after-install] 镜像体积快照 2025-05-18 04:20:42 ===
 
-/root/.bashrc	3KB
-/root/.profile	210b
-/root/Resilio	0b
-/usr/local/bin	23MB
-/usr/local/etc	379b
-/usr/local/games	0b
-/usr/local/include	0b
+/root/.profile	106b
+/usr/local/bin	14KB
 /usr/local/lib	0b
-/usr/local/libexec	0b
-/usr/local/man	9b
-/usr/local/sbin	0b
 /usr/local/share	0b
-/usr/local/src	3KB
-/var/cache/apt	0b
-/var/cache/debconf	2MB
-/var/cache/ldconfig	7KB
-/var/lib/apt/extended_states	2KB
-/var/lib/apt/lists	0b
-/var/lib/apt/mirrors	0b
-/var/lib/apt/periodic	0b
+/var/cache/apk	2MB
+/var/cache/fontconfig	78KB
+/var/cache/misc	0b
+/var/cache/samba	0b
+/var/lib/misc	0b
+/var/lib/samba	0b
+/var/lib/sudo	0b
 
-🔍 [对比] after-install ➜ after-clean 体积变化:
+🔍 [对比] before-install ➜ after-install 体积变化:
 
-/root/.bashrc       	3KB ->(0b)
-/root/.profile      	210b ->(0b)
-/root/Resilio       	0b ->(0b)
-/usr/local/bin      	23MB ->(-9KB)
-/usr/local/etc      	379b ->(0b)
-/usr/local/games    	0b ->(0b)
-/usr/local/include  	0b ->(0b)
-/usr/local/lib      	0b ->(0b)
-/usr/local/libexec  	0b ->(0b)
-/usr/local/man      	9b ->(0b)
-/usr/local/sbin     	0b ->(0b)
-/usr/local/share    	0b ->(0b)
-/usr/local/src      	3KB ->(0b)
-/var/cache/apt      	0b ->(0b)
-/var/cache/debconf  	2MB ->(0b)
-/var/cache/ldconfig 	7KB ->(0b)
-/var/lib/apt/extended_states	2KB ->(0b)
-/var/lib/apt/lists  	0b ->(-35MB)
-/var/lib/apt/mirrors	0b ->(0b)
-/var/lib/apt/periodic	0b ->(0b)
+/root/.profile      	106b ->(+106b)
+/usr/local/bin      	14KB ->(-4KB)
+/usr/local/lib      	0b ->(-4KB)
+/usr/local/share    	0b ->(-4KB)
+/var/cache/apk      	2MB ->(+2MB)
+/var/cache/fontconfig	78KB ->(+78KB)
+/var/cache/misc     	0b ->(-4KB)
+/var/cache/samba    	0b ->(0b)
+/var/lib/misc       	0b ->(-4KB)
+/var/lib/samba      	0b ->(0b)
+/var/lib/sudo       	0b ->(0b)
 ```
 
 

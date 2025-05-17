@@ -10,19 +10,20 @@ log_info "Starting clean of System..."
 clean_apk() {
   log_info "清理 APK 缓存..."
   apk cache clean || true
+  rm -rf /var/cache/apk/* || true
 }
 
 # 清理系统日志
 clean_logs() {
   log_info "清理系统日志..."
   find /var/log -type f -name "*.log" -delete
-  rm -f /var/log/*.gz /var/log/*.1 /var/log/*.old
+  rm -f /var/log/*.gz /var/log/*.1 /var/log/*.old || true
 }
 
 # 清理临时文件
 clean_temp() {
   log_info "清理临时文件..."
-  rm -fr /tmp/* /var/tmp/*
+  rm -fr /tmp/* /var/tmp/* || true
 }
 
 # 清理用户缓存
