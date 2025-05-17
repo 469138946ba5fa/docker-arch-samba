@@ -38,7 +38,7 @@ DIRS="/usr/local /root /opt /var/lib /var/cache"
 # -------------------------------
 if [[ ! -f "${DATA_FILE}" || "${FORCE_UPDATE}" -eq 1 ]]; then
     > "${DATA_FILE}"
-    for base in "${DIRS}"; do
+    for base in ${DIRS}; do
         if [[ -d "${base}" ]]; then
             # 使用 du -sb 获取字节数
             find "${base}" -mindepth 1 -maxdepth 1 -exec du -sb {} + 2>/dev/null | \
