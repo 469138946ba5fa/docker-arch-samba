@@ -11,8 +11,8 @@ services:
     platform: ${PLATFORM}                         # 平台架构，来自 .env
     container_name: ${CONTAINER_NAME}             # 容器名称，来自 .env
     environment:                                  # 容器环境，来自 .env
-      - ${USER_NAME}
-      - ${SAMBA_PASSWORD}
+      - USER_NAME=${USER_NAME}
+      - PASS_WORD=${PASS_WORD}
     ports:                                        # 端口映射，来自 .env
       - ${SAMBA_NBT_PORT}
       - ${SAMBA_TCP_IP_PORT}

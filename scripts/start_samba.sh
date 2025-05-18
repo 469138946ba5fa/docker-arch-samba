@@ -6,6 +6,10 @@ source "$(dirname "$0")/common.sh"
 
 # 定义日志文件并确保 /var/log 存在
 LOG_FILE="/var/log/samba_startup.log"
+
+# 自定义组和共享环境
+#GROUP_NAME='sambashare'
+
 if [ ! -d "/var/log" ]; then
   log_error "/var/log directory does not exist. Please check volume mounts."
   exit 1
@@ -25,18 +29,22 @@ for cmd in smbd; do
 done
 
 # ---------------- Samba 配置 ----------------
-# 设置环境变量 USER_NAME 与 PASSWORD（如果未定义则提供默认值）
-USER_NAME=${USER_NAME:-root}
-PASSWORD=${PASSWORD:-123456}
+# 设置环境变量 USER_NAME 与 PASS_WORD（如果未定义则提供默认值）
+USER_NAME=${USER_NAME:-'root'}
+PASS_WORD=${PASS_WORD:-'123456'}
+SHARE_DIR=${SHARE_DIR:-'/sharedir'}
 log_info "Setting USER_NAME=${USER_NAME} for Samba"
-log_info "Setting PASSWORD for Samba (value hidden)"
+log_info "Setting PASS_WORD for Samba (value hidden)"
 
 # 如果 /etc/samba/smb.conf 不存在，则从备份目录复制，并替换其中的占位符
 if [ ! -f /etc/samba/smb.conf ]; then
     if [ -f /etc/samba.bak/smb.conf ]; then
       cp -fv /etc/samba.bak/smb.conf /etc/samba/smb.conf
-      # 替换配置文件中 " = replace" 为 " = <USER_NAME>"
-      sed -i "s/ = replace/ = ${USER_NAME}/g" /etc/samba/smb.conf
+      # 替换配置文件中 " = user_name" 为 " = <USER_NAME>"
+      # 替换配置文件中 " = sambashare" 为 " = <GROUP_NAME>"
+      sed -i -e "s/ = user_name/ = ${USER_NAME}/g" \
+        -e "s/ = group_name/ = ${GROUP_NAME}/g" \
+        /etc/samba/smb.conf
       # 调用 testparm 检查配置（如果支持）
       echo "" | testparm
     else
@@ -57,17 +65,23 @@ if [ ! -f /etc/samba/smbpasswd ]; then
     # 设置 sudo 权限（NOPASSWD 模式），确保该用户使用 sudo 时无需输入密码
     echo "${USER_NAME} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/"${USER_NAME}"
     chmod 0440 /etc/sudoers.d/"${USER_NAME}"
-    
+
+    # 设置属组为共享组
+    addgroup "$USER_NAME" "$GROUP_NAME"
+
     # 输出用户信息以便核对
     id "${USER_NAME}"
-    
+
     # 非交互方式设置系统密码
-    echo "${USER_NAME}:${PASSWORD}" | chpasswd
+    echo "${USER_NAME}:${PASS_WORD}" | chpasswd
     
     # 更新登录密码并设置 Samba 密码（通过管道传递密码两次）
-    printf "%s\n%s\n" "${PASSWORD}" "${PASSWORD}" | passwd "${USER_NAME}"
-    printf "%s\n%s\n" "${PASSWORD}" "${PASSWORD}" | smbpasswd -a "${USER_NAME}"
+    printf "%s\n%s\n" "${PASS_WORD}" "${PASS_WORD}" | passwd "${USER_NAME}"
+    printf "%s\n%s\n" "${PASS_WORD}" "${PASS_WORD}" | smbpasswd -a "${USER_NAME}"
 fi
+
+# 解除环境
+unset PASS_WORD
 
 # ---------------- 启动 Samba ----------------
 log_info "Launching Samba on ports 139 and 445..."
