@@ -13,7 +13,6 @@ services:
     environment:                                  # 容器环境，来自 .env
       - USER_NAME=${USER_NAME}
       - PASS_WORD=${PASS_WORD}
-    user: ${USER_NAME}                            # 启动用户，来自 .env
     ports:                                        # 端口映射，来自 .env
       - ${SAMBA_NBT_PORT}
       - ${SAMBA_TCP_IP_PORT}

@@ -40,10 +40,10 @@ if [ ! -f /etc/samba/smb.conf ]; then
     if [ -f /etc/samba.bak/smb.conf ]; then
       cp -fv /etc/samba.bak/smb.conf /etc/samba/smb.conf
       # 替换配置文件中 " = user_name" 为 " = <USER_NAME>"
-      # 替换配置文件中 " = group_name" 为 " = <root>"
+      # 替换配置文件中 " = group_name" 为 " = <USER_NAME>"
       # 替换配置文件中 " = share_dir" 为 " = <SHARE_DIR>"
       sed -i -e "s; = user_name; = ${USER_NAME};g" \
-        -e "s; = group_name; = root;g" \
+        -e "s; = group_name; = ${USER_NAME};g" \
         -e "s; = share_dir; = ${SHARE_DIR};g" \
         -e "s; = Samba on Alpine; = Samba on Alpine $(uname -m) $(hostname);g" \
         /etc/samba/smb.conf
