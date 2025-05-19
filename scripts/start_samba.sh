@@ -45,7 +45,7 @@ if [ ! -f /etc/samba/smb.conf ]; then
       sed -i -e "s; = user_name; = ${USER_NAME};g" \
         -e "s; = group_name; = root;g" \
         -e "s; = share_dir; = ${SHARE_DIR};g" \
-        -e "s; = Samba on Alpine; = Samba on Alpine $(uname -m) $(hostname);g"
+        -e "s; = Samba on Alpine; = Samba on Alpine $(uname -m) $(hostname);g" \
         /etc/samba/smb.conf
       # 调用 testparm 检查配置（如果支持）
       echo "" | testparm
