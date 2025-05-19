@@ -6,10 +6,6 @@ source "$(dirname "$0")/common.sh"
 
 log_info "Starting Samba environment setup..."
 
-# 自定义组和共享环境
-#GROUP_NAME='sambashare'
-#SHARE_DIR='/sharedir'
-
 # 定义一个重试安装所有包的函数
 retry_apk_install_bulk() {
     attempts=1
@@ -46,19 +42,21 @@ retry_apk_install_bulk $apk_packages
 #  retry_apk_install_bulk "${pkg}"
 #done
 
-log_info "Creating shared group ${GROUP_NAME} and configuring shared directory ${SHARE_DIR}"
 
+# 以下操作在容器挂载的一瞬间就会改变，根本毫无意义
+#log_info "Creating shared group ${GROUP_NAME} and configuring shared directory ${SHARE_DIR}"
+# 自定义组与共享路径
+#GROUP_NAME='sambashare'
+#SHARE_DIR='/sharedir'
 # 创建共享组（如果不存在）
-if ! getent group "${GROUP_NAME}" >/dev/null 2>&1; then
-    addgroup -S "${GROUP_NAME}"
-fi
-
+#if ! getent group "${GROUP_NAME}" >/dev/null 2>&1; then
+#    addgroup -S "${GROUP_NAME}"
+#fi
 # 设置属组为共享组，权限为 2775（含 setgid 位）
-chown root:"${GROUP_NAME}" "${SHARE_DIR}"
-chmod 2775 "${SHARE_DIR}"
-
+#chown root:"${GROUP_NAME}" "${SHARE_DIR}"
+#chmod 2775 "${SHARE_DIR}"
 # 限制其他用户访问，确保 root 和组用户可读写
-chmod g+rwxs,o-rwx "${SHARE_DIR}"
+#chmod g+rwxs,o-rwx "${SHARE_DIR}"
 
 log_info "Samba setup is complete."
 smbd --version

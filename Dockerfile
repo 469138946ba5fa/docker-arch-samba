@@ -4,7 +4,6 @@ FROM docker.io/library/alpine:latest
 # 构建参数，只有构建阶段有效，构建完成后消失
 # init_system.sh 所需临时环境变量
 ARG TZ='Asia/Shanghai'
-ARG GROUP_NAME='sambashare'
 ARG SHARE_DIR='/sharedir'
 
 # 固化运行环境变量，全局构建和容器运行都可用，字符支持，安装目录，以及启动路径
@@ -13,7 +12,6 @@ ENV LANG=zh_CN.UTF-8 \
     LC_ALL=zh_CN.UTF-8 \
     LANGUAGE=zh_CN.UTF-8 \
     LC_CTYPE=zh_CN.UTF-8 \
-    GROUP_NAME=${GROUP_NAME} \
     SHARE_DIR=${SHARE_DIR}
 
 # 添加常用LABEL（根据需要修改）添加标题 版本 作者 代码仓库 镜像说明，方便优化
