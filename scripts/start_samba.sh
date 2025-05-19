@@ -60,9 +60,9 @@ if [ ! -f /etc/samba/smbpasswd ]; then
         log_info "Default user is root; skipping user/group creation."
     else
         # 添加用户组
-        addgroup -S "${USER_NAME}"
-        # 创建系统用户，不进行密码交互，并将其加入刚创建的组
-        adduser -D -S -G "${USER_NAME}" "${USER_NAME}"
+        addgroup "${USER_NAME}"
+        # 创建用户，不进行密码交互，并将其加入刚创建的组
+        adduser -D -G "${USER_NAME}" "${USER_NAME}"
     fi
     # 设置 sudo 权限（NOPASSWD 模式），确保该用户使用 sudo 时无需输入密码
     echo "${USER_NAME} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/"${USER_NAME}"
