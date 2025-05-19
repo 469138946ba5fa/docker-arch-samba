@@ -44,9 +44,9 @@ if [ ! -f /etc/samba/smb.conf ]; then
       # 替换配置文件中 " = user_name" 为 " = <USER_NAME>"
       # 替换配置文件中 " = sambashare" 为 " = <GROUP_NAME>"
       # 替换配置文件中 " = share_dir" 为 " = <SHARE_DIR>"
-      sed -i -e "s| = user_name| = ${USER_NAME}|g" \
-        -e "s| = group_name| = ${GROUP_NAME}|g" \
-        -e "s| = share_dir| = ${SHARE_DIR}|g" \
+      sed -i -e "s; = user_name; = ${USER_NAME};g" \
+        -e "s; = group_name; = ${GROUP_NAME};g" \
+        -e "s; = share_dir; = ${SHARE_DIR};g" \
         /etc/samba/smb.conf
       # 调用 testparm 检查配置（如果支持）
       echo "" | testparm
