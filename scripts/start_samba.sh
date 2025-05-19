@@ -33,7 +33,6 @@ done
 # 设置环境变量 USER_NAME 与 PASS_WORD（如果未定义则提供默认值）
 USER_NAME=${USER_NAME:-'root'}
 PASS_WORD=${PASS_WORD:-'123456'}
-SHARE_DIR=${SHARE_DIR:-'/sharedir'}
 log_info "Setting USER_NAME=${USER_NAME} for Samba"
 log_info "Setting PASS_WORD for Samba (value hidden)"
 
