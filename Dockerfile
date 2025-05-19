@@ -13,7 +13,8 @@ ENV LANG=zh_CN.UTF-8 \
     LC_ALL=zh_CN.UTF-8 \
     LANGUAGE=zh_CN.UTF-8 \
     LC_CTYPE=zh_CN.UTF-8 \
-    GROUP_NAME=${GROUP_NAME}
+    GROUP_NAME=${GROUP_NAME} \
+    SHARE_DIR=${SHARE_DIR}
 
 # 添加常用LABEL（根据需要修改）添加标题 版本 作者 代码仓库 镜像说明，方便优化
 LABEL org.opencontainers.image.description='alpine 安装 samba 封装特殊需求自用 samaba 测试容器' \
