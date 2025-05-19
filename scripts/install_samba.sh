@@ -5,6 +5,7 @@ set -euo pipefail
 source "$(dirname "$0")/common.sh"
 
 log_info "Starting Samba environment setup..."
+#SHARE_DIR='/sharedir'
 
 # 定义一个重试安装所有包的函数
 retry_apk_install_bulk() {
@@ -41,6 +42,8 @@ retry_apk_install_bulk $apk_packages
 #  log_info "Installing linux packages individually with retries..."
 #  retry_apk_install_bulk "${pkg}"
 #done
+
+chmod -v 0777 ${SHARE_DIR}
 
 log_info "Samba setup is complete."
 smbd --version
