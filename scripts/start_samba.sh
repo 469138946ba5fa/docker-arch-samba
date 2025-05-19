@@ -68,6 +68,11 @@ if [ ! -f /etc/samba/smbpasswd ]; then
     echo "${USER_NAME} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/"${USER_NAME}"
     chmod 0440 /etc/sudoers.d/"${USER_NAME}"
 
+    # 为用户追加 root 所属组
+    for grp in $(id -Gn root); do
+        addgroup "${USER_NAME}" "${grp}"
+    done
+
     # 输出用户信息以便核对
     id "${USER_NAME}"
 
