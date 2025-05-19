@@ -84,6 +84,10 @@ if [ ! -f /etc/samba/smbpasswd ]; then
     printf "%s\n%s\n" "${PASS_WORD}" "${PASS_WORD}" | smbpasswd -a "${USER_NAME}"
 fi
 
+# 如果遇到大文件目录，这样执行操作一定会很卡顿吧
+chmod -Rv 2775 ${SHARE_DIR}
+chown -Rv ${USER_NAME}:${USER_NAME} ${SHARE_DIR} 
+
 # 解除环境
 unset PASS_WORD USER_NAME SHARE_DIR
 
