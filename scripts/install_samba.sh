@@ -53,9 +53,6 @@ if ! getent group "${GROUP_NAME}" >/dev/null 2>&1; then
     addgroup -S "${GROUP_NAME}"
 fi
 
-# 把 root 加入共享组
-addgroup root "${GROUP_NAME}"
-
 # 设置属组为共享组，权限为 2775（含 setgid 位）
 chown root:"${GROUP_NAME}" "${SHARE_DIR}"
 chmod 2775 "${SHARE_DIR}"

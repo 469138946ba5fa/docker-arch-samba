@@ -46,6 +46,7 @@ if [ ! -f /etc/samba/smb.conf ]; then
       sed -i -e "s; = user_name; = ${USER_NAME};g" \
         -e "s; = group_name; = ${GROUP_NAME};g" \
         -e "s; = share_dir; = ${SHARE_DIR};g" \
+        -e "s; = Samba on Alpine; = Samba on Alpine $(uname -m) $(hostname);g"
         /etc/samba/smb.conf
       # 调用 testparm 检查配置（如果支持）
       echo "" | testparm
@@ -59,17 +60,15 @@ if [ ! -f /etc/samba/smbpasswd ]; then
     if [ "$USER_NAME" = "root" ]; then
         log_info "Default user is root; skipping user/group creation."
     else
-        # 创建系统组（-S 表示系统组）
-        addgroup -S "${USER_NAME}"
         # 创建系统用户，不进行密码交互，并将其加入刚创建的组
-        adduser -D -S -G "${USER_NAME}" "${USER_NAME}"
+        adduser -D -S "${USER_NAME}"
     fi
     # 设置 sudo 权限（NOPASSWD 模式），确保该用户使用 sudo 时无需输入密码
     echo "${USER_NAME} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/"${USER_NAME}"
     chmod 0440 /etc/sudoers.d/"${USER_NAME}"
 
     # 设置属组为共享组
-    addgroup "$USER_NAME" "$GROUP_NAME"
+    addgroup "${USER_NAME}" "${GROUP_NAME}"
 
     # 输出用户信息以便核对
     id "${USER_NAME}"
