@@ -90,8 +90,10 @@ unset PASS_WORD
 # ---------------- 启动 Samba ----------------
 log_info "Launching Samba on ports 139 and 445..."
 /usr/sbin/smbd
-if [ "$USER_NAME" != "root" ]; then
-  log_info "Default user is not root; run chmod and chown ${SHARE_DIR} ."
+if [ "$USER_NAME" = "root" ]; then
+  log_info "Default user is ${USER_NAME}; sharedir is ${SHARE_DIR} ."
+else
+  log_info "Default user is ${USER_NAME}; sharedir is ${SHARE_DIR} ."
   # 如果遇到大文件目录，这样执行操作一定会很卡顿吧
   # 放弃 Dockerfile workdir 直接 install_samba.sh 创建修改共享目录吧
   #chmod -Rv 2775 ${SHARE_DIR}
