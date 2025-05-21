@@ -36,7 +36,7 @@ log_info "Setting USER_NAME=${USER_NAME} for Samba"
 log_info "Setting PASS_WORD for Samba (value hidden)"
 
 # 如果 /etc/samba/smb.conf 不存在，则从备份目录复制，并替换其中的占位符
-if [ ! -f /etc/samba/smb.conf ]; then
+#if [ ! -f /etc/samba/smb.conf ]; then
     if [ -f /etc/samba.bak/smb.conf ]; then
       cp -fv /etc/samba.bak/smb.conf /etc/samba/smb.conf
       # 替换配置文件中 " = user_name" 为 " = <USER_NAME>"
@@ -52,10 +52,10 @@ if [ ! -f /etc/samba/smb.conf ]; then
     else
       log_warning "Backup smb.conf not found, skipping configuration copy."
     fi
-fi
+#fi
 
 # 判断 /etc/samba/smbpasswd 是否存在，不存在则设置 Samba 用户（以及系统用户、组）
-if [ ! -f /etc/samba/smbpasswd ]; then
+#if [ ! -f /etc/samba/smbpasswd ]; then
     if [ "$USER_NAME" = "root" ]; then
         log_info "Default user is root; skipping user/group creation."
     else
@@ -82,16 +82,23 @@ if [ ! -f /etc/samba/smbpasswd ]; then
     # 更新登录密码并设置 Samba 密码（通过管道传递密码两次）
     printf "%s\n%s\n" "${PASS_WORD}" "${PASS_WORD}" | passwd "${USER_NAME}"
     printf "%s\n%s\n" "${PASS_WORD}" "${PASS_WORD}" | smbpasswd -a "${USER_NAME}"
-fi
-
-# 如果遇到大文件目录，这样执行操作一定会很卡顿吧
-chmod -Rv 2775 ${SHARE_DIR}
-chown -Rv ${USER_NAME}:${USER_NAME} ${SHARE_DIR} 
+#fi
 
 # 解除环境
-unset PASS_WORD USER_NAME SHARE_DIR
+unset PASS_WORD
 
 # ---------------- 启动 Samba ----------------
 log_info "Launching Samba on ports 139 and 445..."
 /usr/sbin/smbd
+if [ "$USER_NAME" != "root" ]; then
+  log_info "Default user is not root; run chmod and chown ${SHARE_DIR} ."
+  # 如果遇到大文件目录，这样执行操作一定会很卡顿吧
+  # 放弃 Dockerfile workdir 直接 install_samba.sh 创建修改共享目录吧
+  #chmod -Rv 2775 ${SHARE_DIR}
+  #chown -Rv ${USER_NAME}:${USER_NAME} ${SHARE_DIR} 
+fi
+
+# 解除环境
+unset USER_NAME SHARE_DIR
+
 tail -f /var/log/samba/log.smbd

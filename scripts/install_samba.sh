@@ -43,7 +43,9 @@ retry_apk_install_bulk $apk_packages
 #  retry_apk_install_bulk "${pkg}"
 #done
 
-chmod -v 0777 ${SHARE_DIR}
+# 脚本创建目录并设置权限
+mkdir -pv ${SHARE_DIR}
+chmod -Rv 2775 ${SHARE_DIR}
 
 log_info "Samba setup is complete."
 smbd --version
